@@ -1,0 +1,18 @@
+body{
+  background: #343d46;
+}
+ 
+input{
+  margin: 100px auto;
+  width: 300px;
+  height: 50px;
+}
+
+input::placeholder {              /* Chrome, Safari, Firefox */
+  color: #222;
+  opacity: 1;
+}
+input:-ms-input-placeholder {     /* IE, Edge */
+  color: #222;   
+  opacity: 1;
+}

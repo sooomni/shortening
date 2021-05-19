@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <!-- <link th:href="@{css/style.css}" rel="stylesheet" type="text/css">-->
+    <script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script>
+    window.onload = function() {
+    	document.getElementById("shorten").onclick = function (){ 
+
+			$('#input').keyup(function(){
+				var length = $('#input').val().length;
+				if(length > 0) {
+					document.getElementById("result").innerHTML ="";
+				}
+			});
+			
+			if(!$("#input").val()){
+				document.getElementById("result").innerHTML = "Please type in any URL";
+			}	
+			else{	
+	  				 var reqDTO = new Object();
+    				reqDTO.originURL = $("#input").val();
+        
+	        	 $.ajax({
+				    url : "/shorten",
+    				type: "POST",
+    				contentType: "application/json;charset=UTF-8",
+           			data:JSON.stringify(reqDTO),
+    				dataType: "json",
+    				async:true,
+				})
+	       		.done(function(resDTO){
+					console.log(success);
+					document.getElementById("result").replaceWith (resDTO);
+        		})
+        		.fail(function(resDTO){
+					console.log(resDTO);
+					document.getElementById("result").innerHTML = resDTO;
+				});
+			} 
+         } 
+    }
+	</script>	    
+    <title>URL Shortening Page</title>
+</head>
+<body>
+    <h1>URL Shortening Page</h1>
+    
+    <input id="input" type="text" placeholder="Please type in ..." minlength="1"/>
+    <input id="shorten" type="button" value ="URL 줄이기"/>
+    <h5><div id="result" value="결과는 .."></div></h5>
+</body>
+</html>
